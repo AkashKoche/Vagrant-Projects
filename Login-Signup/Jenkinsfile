@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build Backend') {
+            steps {
+                sh 'cd backend && npm install'
+            }
+        }
+        stage('Test Backend') {
+            steps {
+                sh 'echo "No tests available yet"'
+            }
+        }
+        stage('Deploy Frontend') {
+            steps {
+                sh 'rsync -avz frontend/ vagrant@webapp:/vagrant/frontend/'
+            }
+        }
+        stage('Deploy Backend') {
+            steps {
+                sh 'scp -r backend/ vagrant@webapp:/vagrant/backend/'
+                sh 'ssh vagrant@webapp "cd /vagrant/backend && npm install && pm2 restart app.js"'
+            }
+        }
+    }
+}

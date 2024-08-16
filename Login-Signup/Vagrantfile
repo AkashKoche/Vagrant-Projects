@@ -1,0 +1,8 @@
+Vagrant.configure("2") do |config|
+    config.vm.define "webapp" do |webapp|
+      webapp.vm.box = "ubuntu/bionic64"
+      webapp.vm.network "public_network", type: "dhcp"
+      webapp.vm.provision "shell", path: "provisioning/bootstrap.sh"
+    end
+  end
+  
